@@ -1,0 +1,29 @@
+
+// Receive data from the device
+class Constants{
+    // UPLOAD_API_URL = "https://api.github.com/repos/simjxu/Wavelets_Matlab/"     // This is the url that you have to have to upload data to
+    UPLOAD_API_URL = "https://hooks.slack.com/services/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"
+    
+}
+
+
+// Post the data to the server
+function upload_to_cloud(sample_data) {
+    local params = {
+        "text": sample_data
+    }
+    local url = Constants.UPLOAD_API_URL + "?agent_url=" + http.agenturl()
+    local headers = {}
+    local body = http.jsonencode(params)
+    local request = http.post(url, headers, body)
+    request.sendasync(function(t) {})
+}
+
+function func(data_received){
+    foreach(i in data_received){
+        server.log(i)
+    }
+    upload_to_cloud(data_received)
+}
+
+device.on("sending", func)

@@ -1,0 +1,12 @@
+
+// Create some dummy values
+
+
+// Send data to the agent
+local data = "test data"
+
+function start(){
+    agent.send("sending", data)
+}
+
+start()
